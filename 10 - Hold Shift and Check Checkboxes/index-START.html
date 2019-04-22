@@ -57,7 +57,7 @@
 
   -->
   <div class="inbox">
-    <div class="item">
+    <div id='test' class="item">
       <input type="checkbox">
       <p>This is an inbox layout.</p>
     </div>
@@ -96,6 +96,29 @@
   </div>
 
 <script>
+const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]')
+let lastChecked;
+
+function handleCheck(e){
+  console.log('clicked')
+  let inBetween = false;
+  if(e.shiftKey && this.checked){
+    console.log('shift + clicked')
+    checkboxes.forEach( checkbox => {
+      if(this === checkbox || checkbox === lastChecked){
+          inBetween = !inBetween;
+      }
+      if(inBetween){
+        checkbox.checked = true;
+      }
+    })
+  }
+  lastChecked = this;
+}
+
+checkboxes.forEach( item => item.addEventListener('click', handleCheck))
+console.log(checkboxes)
+
 </script>
 </body>
 </html>
